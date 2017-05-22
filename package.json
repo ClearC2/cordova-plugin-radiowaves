@@ -1,0 +1,14 @@
+{
+  "name": "cordova-plugin-radiowaves",
+  "version": "1.0.0",
+  "description": "Access Android signal, CDMA and LTE info",
+  "author": "Cameron Moreau <cmoreau@clearc2.com>",
+  "license": "ISC",
+  "platforms": [
+    "android"
+  ],
+  "engines": {
+    "name": "cordova",
+    "verison": ">=3.6.0"
+  }
+}

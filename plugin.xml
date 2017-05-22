@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="cordova-plugin-radiowaves" version="0.0.1">
+    <name>RadioWaves</name>
+    <description>Cordova Plugin for Android Signal Info</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,android,radio signal</keywords>
+
+    <js-module src="www/radiowaves.js" name="radiowaves">
+      <clobbers target="radiowaves" />
+    </js-module>
+   
+    <!-- android -->
+    <platform name="android">
+      <config-file target="AndroidManifest.xml" parent="/*">
+        <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+      </config-file>
+
+      <config-file target="res/xml/config.xml" parent="/*">
+        <feature name="radiowaves">
+          <param name="android-package" value="com.clearc2.cordova.radiowaves.RadioWaves"/>
+        </feature>
+      </config-file>
+
+      <source-file src="src/android/RadioWaves.java" target-dir="src/com/clearc2/cordova/radiowaves" />
+      <source-file src="src/android/CustomPhoneStateListener.java" target-dir="src/com/clearc2/cordova/radiowaves" />
+      <source-file src="src/android/SignalStrengthListener.java" target-dir="src/com/clearc2/cordova/radiowaves" />
+    </platform>
+</plugin>
