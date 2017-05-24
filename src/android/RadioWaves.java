@@ -56,7 +56,6 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 	@Override
 	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
 		super.initialize(cordova, webView);
-		Log.d("SIGNAL_INFO", "Initialized");
 		
 		this.activity = this.cordova.getActivity();
 		
@@ -67,7 +66,6 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 
 	@Override
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
-		Log.d("SIGNAL_INFO", "Execute: " + action);
 
 		// Listen to signal strength changes
 		if ("watchSignal".equals(action)) {
