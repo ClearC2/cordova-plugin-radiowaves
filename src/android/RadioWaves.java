@@ -4,6 +4,7 @@ import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaInterface;
+import org.apache.cordova.PermissionHelper;
 import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,6 +12,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.telephony.CellIdentityCdma;
 import android.telephony.CellIdentityGsm;
 import android.telephony.CellIdentityLte;
@@ -21,6 +23,7 @@ import android.telephony.CellInfoLte;
 import android.telephony.PhoneStateListener;
 import android.telephony.SignalStrength;
 import android.telephony.TelephonyManager;
+import android.Manifest;
 import android.os.Build;
 import android.util.Log;
 
@@ -29,6 +32,8 @@ import android.util.Log;
  */
 
 public class RadioWaves extends CordovaPlugin implements SignalStrengthListener {
+
+	private static final String LOCATION_PERMISSION = Manifest.permission.ACCESS_COARSE_LOCATION;
 
 	// Plugin Context
 	Activity activity;
@@ -58,14 +63,12 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 		this.tm = (TelephonyManager) activity.getSystemService(Context.TELEPHONY_SERVICE);
 		this.phoneStateListener = new CustomPhoneStateListener(this);
 
-		// Get cell info data
-		// if (Build.VERSION.SDK_INT >= 17) {
-		// 	for(CellInfo i : tm.getAllCellInfo()) {
-		// 		if (i instanceof CellInfoCdma) cellInfoCdma = (CellInfoCdma) i;
-		// 		else if (i instanceof CellInfoLte) cellInfoLte = (CellInfoLte) i;
-		// 		else if (i instanceof CellInfoGsm) cellInfoGsm = (CellInfoGsm) i;
-		// 	}
-		// }
+		// Request location permission if needed
+		if(PermissionHelper.hasPermission(this, LOCATION_PERMISSION)) {
+			getCellInfo();
+		} else {
+			PermissionHelper.requestPermission(this, 0, LOCATION_PERMISSION);
+		}
 	}
 
 	@Override
@@ -92,6 +95,29 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 
 		// Returning false results in a "MethodNotFound" error.
 		return false;
+	}
+
+	@Override
+	public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults) {
+		// Only check location permission
+		if (permissions[0] == LOCATION_PERMISSION) {
+
+			// If allowed, fetch cell info
+			if (grantResults[0] != PackageManager.PERMISSION_DENIED) {
+				getCellInfo();
+			}
+		}
+	}
+
+	private void getCellInfo() {
+		// Get cell info data
+		if (Build.VERSION.SDK_INT >= 17) {
+			for(CellInfo i : tm.getAllCellInfo()) {
+				if (i instanceof CellInfoCdma) cellInfoCdma = (CellInfoCdma) i;
+				else if (i instanceof CellInfoLte) cellInfoLte = (CellInfoLte) i;
+				else if (i instanceof CellInfoGsm) cellInfoGsm = (CellInfoGsm) i;
+			}
+		}
 	}
 
 	/**

@@ -6,35 +6,14 @@ var argscheck = require('cordova/argscheck'),
 
 var PLUGIN_NAME = "radiowaves";
 
-// channel.createSticky('onCordovaInfoReady');
-// channel.waitForInitialization('onCordovaInfoReady');
-
 /**
  * RadioWaves:
  */
 function RadioWaves() {
-  this.signal = {}
-  this.cdma = null;
-  this.lte = null;
-  this.gsm = null;
-  
-  // var self = this;
-  // channel.onCordovaReady.subscribe(function() {
-  //   self.getInfo(function(data) {
-  //     this.cdma = data.cdma;
-  //     this.lte = data.lte;
-  //     this.gsm = data.gsm;
-  //   });
-  // })
 }
 
 RadioWaves.prototype.watchSignal = function(successCallback, errorCallback) {
-  var success = function(signalData) {
-    this.signal = signalData
-    successCallback(signalData);
-  }
-
-  basicExec("watchSignal", success, errorCallback);
+  basicExec("watchSignal", successCallback, errorCallback);
 }
 
 RadioWaves.prototype.stopWatchSignal = function(successCallback, errorCallback) {
