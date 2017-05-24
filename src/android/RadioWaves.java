@@ -40,6 +40,7 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 
 	// Save callback to hit multiple times as signal changes
 	CallbackContext watchCallback;
+	CallbackContext infoCallback;
 
 	// Radio wave signal variables
 	TelephonyManager tm;
@@ -62,13 +63,6 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 		// Setup signal listener
 		this.tm = (TelephonyManager) activity.getSystemService(Context.TELEPHONY_SERVICE);
 		this.phoneStateListener = new CustomPhoneStateListener(this);
-
-		// Request location permission if needed
-		if(PermissionHelper.hasPermission(this, LOCATION_PERMISSION)) {
-			getCellInfo();
-		} else {
-			PermissionHelper.requestPermission(this, 0, LOCATION_PERMISSION);
-		}
 	}
 
 	@Override
@@ -89,7 +83,16 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 
 		// Fetch all CellInfo data
 		if ("getInfo".equals(action)) {
-			getInfo(callbackContext);
+
+			// Request location permission if needed
+			if(PermissionHelper.hasPermission(this, LOCATION_PERMISSION)) {
+				getCellInfo();
+				getInfo(callbackContext);
+			} else {
+				this.infoCallback = callbackContext;
+				PermissionHelper.requestPermission(this, 0, LOCATION_PERMISSION);
+			}
+			
 			return true;
 		}
 
@@ -99,13 +102,15 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 
 	@Override
 	public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults) {
-		// Only check location permission
-		if (permissions[0] == LOCATION_PERMISSION) {
-
-			// If allowed, fetch cell info
-			if (grantResults[0] != PackageManager.PERMISSION_DENIED) {
-				getCellInfo();
-			}
+		// If allowed, fetch cell info
+		if (grantResults[0] != PackageManager.PERMISSION_DENIED) {
+			getCellInfo();
+			
+			// Finish getting info
+			if (infoCallback != null) getInfo(infoCallback);
+		} else {
+			// Info failed
+			if (infoCallback != null) infoCallback.error("Permission denied");
 		}
 	}
 
