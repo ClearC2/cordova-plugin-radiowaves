@@ -238,7 +238,7 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 				for (int i = 0; i < LTEData.length; i++) {
 					String[] data = LTEData[i].split("=");
 					if (data.length == 2) {
-						int value = (data[1] == Integer.MAX_VALUE) ? -1 : data[1];
+						int value = (Integer.parseInt(data[1]) == Integer.MAX_VALUE) ? -1 : data[1];
 						lteData.put(data[0], value);
 					}
 				}
