@@ -220,6 +220,9 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 			if (cellInfoLte != null) {
 				CellSignalStrengthLte signalStrengthLte = cellInfoLte.getCellSignalStrength();
 				lteData.put("rssi", signalStrengthLte.getDbm());
+				lteData.put("snr", signalStrengthLte.getRssnr());
+				lteData.put("rsrp", signalStrengthLte.getRsrp());
+				lteData.put("rsqr", signalStrengthLte.getRsrq());
 			}
 
 			// Signal
@@ -227,7 +230,7 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 			signalData.put("errorRate", signalStrength.getGsmBitErrorRate());
 			signalData.put("cdma", cdmaData);
 			signalData.put("evdo", evdoData);
-			signalData.put("evdo", lteData);
+			signalData.put("lte", lteData);
 
 		} catch (JSONException e) {
 			e.printStackTrace();
