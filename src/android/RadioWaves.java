@@ -217,7 +217,7 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 			evdoData.put("snr", signalStrength.getEvdoSnr());
 
 			// LTE
-			Log.e(signalStrengthLte)
+			Log.e(signalStrengthLte);
 
 			// Signal
 			signalData.put("strength", signalStrength.getGsmSignalStrength());
