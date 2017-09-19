@@ -206,8 +206,6 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 		JSONObject evdoData = new JSONObject();
 		JSONObject lteData = new JSONObject();
 
-		CellSignalStrengthLte signalStrengthLte;
-
 		try {
 			// CDMA
 			cdmaData.put("rssi", signalStrength.getCdmaDbm());
@@ -219,7 +217,10 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 			evdoData.put("snr", signalStrength.getEvdoSnr());
 
 			// LTE
-			lteData.put("rssi", signalStrengthLte.getDbm());
+			if (cellInfoLte != null) {
+				CellSignalStrengthLte signalStrengthLte = cellInfoLte.getCellSignalStrength();
+				lteData.put("rssi", signalStrengthLte.getDbm());
+			}
 
 			// Signal
 			signalData.put("strength", signalStrength.getGsmSignalStrength());
