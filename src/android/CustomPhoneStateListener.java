@@ -2,7 +2,6 @@ package com.clearc2.cordova.radiowaves;
 
 import android.telephony.PhoneStateListener;
 import android.telephony.SignalStrength;
-import android.telephony.CellSignalStrengthLte;
 import android.util.Log;
 
 /**
@@ -18,8 +17,8 @@ public class CustomPhoneStateListener extends PhoneStateListener {
   }
 
   @Override
-  public void onSignalStrengthsChanged(SignalStrength signalStrength, CellSignalStrengthLte signalStrengthLte) {
-      super.onSignalStrengthsChanged(signalStrength, signalStrengthLte);
-      listener.signalUpdated(signalStrength, signalStrengthLte);
+  public void onSignalStrengthsChanged(SignalStrength signalStrength) {
+      super.onSignalStrengthsChanged(signalStrength);
+      listener.signalUpdated(signalStrength);
   }
 }
