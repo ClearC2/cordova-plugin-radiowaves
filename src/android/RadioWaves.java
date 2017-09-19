@@ -219,6 +219,9 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 		JSONObject cdmaData = new JSONObject();
 		JSONObject evdoData = new JSONObject();
 		JSONObject lteData = new JSONObject();
+		JSONObject dangerous_cdmaData = new JSONObject();
+		JSONObject dangerous_evdoData = new JSONObject();
+		JSONObject dangerous_lteData = new JSONObject();
 
 		try {
 			// CDMA
@@ -233,8 +236,7 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 			// LTE
 			if (cellInfoLte != null) {
 				CellSignalStrengthLte signalStrengthLte = cellInfoLte.getCellSignalStrength();
-				lteData.put("dbm", signalStrengthLte.getDbm());
-				lteData.put("rssi", signalStrength.getLteDbm());
+				lteData.put("rssi", signalStrengthLte.getDbm());
 				String[] LTEData = signalStrengthLte.toString().split(" ");
 				for (int i = 0; i < LTEData.length; i++) {
 					String[] data = LTEData[i].split("=");
@@ -246,14 +248,28 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 				}
 			}
 
+			// Manual Array Parse, This data is not always accurate, this is only here for reference.
+			String[] SignalParse = signalStrength.toString().split(" ");
+			dangerous_cdmaData.put("rssi", SignalParse[3]);
+			dangerous_cdmaData.put("ecio", SignalParse[4]);
+			dangerous_evdoData.put("rssi", SignalParse[5]);
+			dangerous_evdoData.put("ecio", SignalParse[6]);
+			dangerous_evdoData.put("snr", SignalParse[7]);
+			dangerous_lteData.put("rssi", SignalParse[8]);
+			dangerous_lteData.put("rsrp", SignalParse[9]);
+			dangerous_lteData.put("rsrq", SignalParse[10]);
+			dangerous_lteData.put("snr", SignalParse[11]);
+			dangerous_lteData.put("cqi", SignalParse[12]);
+
 			// Signal
 			signalData.put("strength", signalStrength.getGsmSignalStrength());
 			signalData.put("errorRate", signalStrength.getGsmBitErrorRate());
 			signalData.put("cdma", cdmaData);
 			signalData.put("evdo", evdoData);
 			signalData.put("lte", lteData);
-			signalData.put("signalStrength", signalStrength.toString());
-			signalData.put("cellInfoLte", cellInfoLte.toString());
+			signalData.put("dangerous_cdma", dangerous_cdmaData);
+			signalData.put("dangerous_evdo", dangerous_evdoData);
+			signalData.put("dangerous_lte", dangerous_lteData);
 
 		} catch (JSONException e) {
 			e.printStackTrace();
