@@ -251,6 +251,8 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 			signalData.put("cdma", cdmaData);
 			signalData.put("evdo", evdoData);
 			signalData.put("lte", lteData);
+			signalData.put("signalStrength", signalStrength.toString())
+			signalData.put("cellInfoLte", cellInfoLte.toString())
 
 		} catch (JSONException e) {
 			e.printStackTrace();
