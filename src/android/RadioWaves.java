@@ -22,6 +22,7 @@ import android.telephony.CellInfoGsm;
 import android.telephony.CellInfoLte;
 import android.telephony.PhoneStateListener;
 import android.telephony.SignalStrength;
+import android.telephony.CellSignalStrengthLte;
 import android.telephony.TelephonyManager;
 import android.Manifest;
 import android.os.Build;
@@ -199,20 +200,27 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 	/**
 	 * Implemented signal listener
 	 */
-	public void signalUpdated(SignalStrength signalStrength) {
+	public void signalUpdated(SignalStrength signalStrength, CellSignalStrengthLte signalStrengthLte) {
 		JSONObject signalData = new JSONObject();
 		JSONObject cdmaData = new JSONObject();
 		JSONObject evdoData = new JSONObject();
+		JSONObject lteData = new JSONObject();
 
 		try {
 			// CDMA
-			cdmaData.put("dbm", signalStrength.getCdmaDbm());
+			cdmaData.put("rssi", signalStrength.getCdmaDbm());
 			cdmaData.put("ecio", signalStrength.getCdmaEcio());
 
 			// EVDO
-			evdoData.put("dbm", signalStrength.getEvdoDbm());
+			evdoData.put("rssi", signalStrength.getEvdoDbm());
 			evdoData.put("ecio", signalStrength.getEvdoEcio());
 			evdoData.put("snr", signalStrength.getEvdoSnr());
+
+			// LTE
+			lteData.put("rssi", signalStrengthLte.getDbm());
+			lteData.put("snr", signalStrengthLte.getRssnr());
+			lteData.put("rsrp", signalStrengthLte.getRsrp());
+			lteData.put("rsrq", signalStrengthLte.getRsrq());
 
 			// Signal
 			signalData.put("strength", signalStrength.getGsmSignalStrength());
