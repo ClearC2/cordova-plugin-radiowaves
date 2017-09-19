@@ -154,11 +154,25 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 			if (cellInfoLte != null) {
 				CellIdentityLte lteIdentity = cellInfoLte.getCellIdentity();
 
-				lteInfo.put("mcc",lteIdentity.getMcc());
-				lteInfo.put("mnc",lteIdentity.getMnc());
-				lteInfo.put("pci",lteIdentity.getPci());
-				lteInfo.put("tac",lteIdentity.getTac());
-				lteInfo.put("ci",lteIdentity.getCi());
+				int mcc = (lteIdentity.getMcc() == Integer.MAX_VALUE) ? -1 : lteIdentity.getMcc();
+				int mnc = (lteIdentity.getMnc() == Integer.MAX_VALUE) ? -1 : lteIdentity.getMnc();
+				int pci = (lteIdentity.getPci() == Integer.MAX_VALUE) ? -1 : lteIdentity.getPci();
+				int tac = (lteIdentity.getTac() == Integer.MAX_VALUE) ? -1 : lteIdentity.getTac();
+				int ci = (lteIdentity.getCi() == Integer.MAX_VALUE) ? -1 : lteIdentity.getCi();
+				int sector = (ci == -1) ? -1 : (ci & 0xFF);
+				int CI = ci >> 8;
+				CI &= 0xFFFFFF;
+				int market = (ci == -1) ? -1 : CI / 1000;
+				int enodeb = (ci == -1) ? -1 : CI % 1000;
+
+				lteInfo.put("mcc", mcc);
+				lteInfo.put("mnc", mnc);
+				lteInfo.put("pci", pci);
+				lteInfo.put("tac", tac);
+				lteInfo.put("ci", ci);
+				lteInfo.put("sector", sector);
+				lteInfo.put("market", market);
+				lteInfo.put("enodeb", enodeb);
 
 				cellInfo.put("lte", lteInfo);
 			}
