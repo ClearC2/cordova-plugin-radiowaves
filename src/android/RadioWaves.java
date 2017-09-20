@@ -239,6 +239,7 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 				lteData.put("dbm", signalStrengthLte.getDbm());
 				lteData.put("asu", signalStrengthLte.getAsuLevel());
 				String[] LTEData = signalStrengthLte.toString().split(" ");
+				lteData.put("raw", signalStrengthLte.toString())
 				for (int i = 0; i < LTEData.length; i++) {
 					String[] data = LTEData[i].split("=");
 					if (data.length == 2) {
