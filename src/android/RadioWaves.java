@@ -242,8 +242,12 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 					String[] data = LTEData[i].split("=");
 					if (data.length == 2) {
 						Integer value = Integer.valueOf(data[1]);
+						String key = data[0];
 						value = (value == Integer.MAX_VALUE) ? -1 : value;
-						lteData.put(data[0], value);
+						if (key == "ss" && value != -1) {
+							lteData.put("rssi", value-140);
+						}
+						lteData.put(key, value);
 					}
 				}
 			}
@@ -252,11 +256,12 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 			String[] SignalParse = signalStrength.toString().split(" ");
 			if (SignalParse.length >= 11) {
 				dangerous_cdmaData.put("rssi", Integer.parseInt(SignalParse[3]));
-				dangerous_cdmaData.put("ecio", Integer.parseInt(SignalParse[4])-140);
+				dangerous_cdmaData.put("ecio", Integer.parseInt(SignalParse[4]));
 				dangerous_evdoData.put("rssi", Integer.parseInt(SignalParse[5]));
 				dangerous_evdoData.put("ecio", Integer.parseInt(SignalParse[6]));
 				dangerous_evdoData.put("snr", Integer.parseInt(SignalParse[7]));
-				dangerous_lteData.put("rssi", Integer.parseInt(SignalParse[8]));
+				dangerous_lteData.put("ss", Integer.parseInt(SignalParse[8]));
+				dangerous_lteData.put("rssi", Integer.parseInt(SignalParse[8])-140);
 				dangerous_lteData.put("rsrp", Integer.parseInt(SignalParse[9]));
 				dangerous_lteData.put("rsrq", Integer.parseInt(SignalParse[10]));
 				dangerous_lteData.put("snr", Integer.parseInt(SignalParse[11]));
