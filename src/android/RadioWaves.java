@@ -254,16 +254,16 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 			// Manual Array Parse, This data is not always accurate, this is only here for reference.
 			String[] SignalParse = signalStrength.toString().split(" ");
 			if (SignalParse.length >= 11) {
-				dangerous_cdmaData.put("rssi", (Integer.parseInt(SignalParse[3]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[3])));
-				dangerous_cdmaData.put("ecio", (Integer.parseInt(SignalParse[4]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[4])));
-				dangerous_evdoData.put("rssi", (Integer.parseInt(SignalParse[5]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[5])));
-				dangerous_evdoData.put("ecio", (Integer.parseInt(SignalParse[6]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[6])));
-				dangerous_evdoData.put("snr", (Integer.parseInt(SignalParse[7]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[7])));
-				dangerous_lteData.put("ss", (Integer.parseInt(SignalParse[8]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[8])));
-				dangerous_lteData.put("rsrp", (Integer.parseInt(SignalParse[9]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[9])));
-				dangerous_lteData.put("rsrq", (Integer.parseInt(SignalParse[10]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[10])));
-				dangerous_lteData.put("snr", (Integer.parseInt(SignalParse[11]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[11])));
-				dangerous_lteData.put("cqi", (Integer.parseInt(SignalParse[12]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[12])));
+				dangerous_cdmaData.put("rssi", (Integer.parseInt(SignalParse[3]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[3]));
+				dangerous_cdmaData.put("ecio", (Integer.parseInt(SignalParse[4]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[4]));
+				dangerous_evdoData.put("rssi", (Integer.parseInt(SignalParse[5]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[5]));
+				dangerous_evdoData.put("ecio", (Integer.parseInt(SignalParse[6]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[6]));
+				dangerous_evdoData.put("snr", (Integer.parseInt(SignalParse[7]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[7]));
+				dangerous_lteData.put("ss", (Integer.parseInt(SignalParse[8]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[8]));
+				dangerous_lteData.put("rsrp", (Integer.parseInt(SignalParse[9]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[9]));
+				dangerous_lteData.put("rsrq", (Integer.parseInt(SignalParse[10]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[10]));
+				dangerous_lteData.put("snr", (Integer.parseInt(SignalParse[11]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[11]));
+				dangerous_lteData.put("cqi", (Integer.parseInt(SignalParse[12]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[12]));
 			}
 
 			// Signal
