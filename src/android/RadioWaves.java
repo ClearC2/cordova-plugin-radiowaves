@@ -28,6 +28,8 @@ import android.Manifest;
 import android.os.Build;
 import android.util.Log;
 
+import java.lang.*;
+
 /**
  * Created by cameronmoreau on 5/17/17.
  */
