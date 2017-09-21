@@ -238,17 +238,14 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 				CellSignalStrengthLte signalStrengthLte = cellInfoLte.getCellSignalStrength();
 				lteData.put("dbm", signalStrengthLte.getDbm());
 				lteData.put("asu", signalStrengthLte.getAsuLevel());
+				lteData.put("rssi", signalStrengthLte.getAsuLevel()-140);
 				String[] LTEData = signalStrengthLte.toString().split(" ");
-				lteData.put("raw", signalStrengthLte.toString());
 				for (int i = 0; i < LTEData.length; i++) {
 					String[] data = LTEData[i].split("=");
 					if (data.length == 2) {
 						String key = data[0];
 						Integer value = Integer.valueOf(data[1]);
 						value = (value == Integer.MAX_VALUE) ? -1 : value;
-						if (key.equals("ss")) {
-							lteData.put("rssi", value-140);
-						}
 						lteData.put(key, value);
 					}
 				}
@@ -257,17 +254,16 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 			// Manual Array Parse, This data is not always accurate, this is only here for reference.
 			String[] SignalParse = signalStrength.toString().split(" ");
 			if (SignalParse.length >= 11) {
-				dangerous_cdmaData.put("rssi", Integer.parseInt(SignalParse[3]));
-				dangerous_cdmaData.put("ecio", Integer.parseInt(SignalParse[4]));
-				dangerous_evdoData.put("rssi", Integer.parseInt(SignalParse[5]));
-				dangerous_evdoData.put("ecio", Integer.parseInt(SignalParse[6]));
-				dangerous_evdoData.put("snr", Integer.parseInt(SignalParse[7]));
-				dangerous_lteData.put("ss", Integer.parseInt(SignalParse[8]));
-				dangerous_lteData.put("rssi", Integer.parseInt(SignalParse[8])-140);
-				dangerous_lteData.put("rsrp", Integer.parseInt(SignalParse[9]));
-				dangerous_lteData.put("rsrq", Integer.parseInt(SignalParse[10]));
-				dangerous_lteData.put("snr", Integer.parseInt(SignalParse[11]));
-				dangerous_lteData.put("cqi", Integer.parseInt(SignalParse[12]));
+				dangerous_cdmaData.put("rssi", (Integer.parseInt(SignalParse[3]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[3])));
+				dangerous_cdmaData.put("ecio", (Integer.parseInt(SignalParse[4]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[4])));
+				dangerous_evdoData.put("rssi", (Integer.parseInt(SignalParse[5]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[5])));
+				dangerous_evdoData.put("ecio", (Integer.parseInt(SignalParse[6]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[6])));
+				dangerous_evdoData.put("snr", (Integer.parseInt(SignalParse[7]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[7])));
+				dangerous_lteData.put("ss", (Integer.parseInt(SignalParse[8]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[8])));
+				dangerous_lteData.put("rsrp", (Integer.parseInt(SignalParse[9]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[9])));
+				dangerous_lteData.put("rsrq", (Integer.parseInt(SignalParse[10]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[10])));
+				dangerous_lteData.put("snr", (Integer.parseInt(SignalParse[11]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[11])));
+				dangerous_lteData.put("cqi", (Integer.parseInt(SignalParse[12]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[12])));
 			}
 
 			// Signal
