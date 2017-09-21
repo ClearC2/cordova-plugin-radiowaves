@@ -250,6 +250,18 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 					}
 				}
 			}
+			else {
+                int cc = 0;
+                int signalLevel = -1;
+                while ( signalLevel == -1){
+                    Thread.sleep(200);
+                    if (cc++ >= 5)
+                    {
+                        break;
+                    }
+                }
+                lteData.put("test_dbm", -113 + 2 * signalLevel);
+			}
 
 			// Manual Array Parse, This data is not always accurate, this is only here for reference.
 			String[] SignalParse = signalStrength.toString().split(" ");
