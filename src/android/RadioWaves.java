@@ -28,8 +28,6 @@ import android.Manifest;
 import android.os.Build;
 import android.util.Log;
 
-import java.lang.*;
-
 /**
  * Created by cameronmoreau on 5/17/17.
  */
@@ -251,18 +249,6 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 						lteData.put(key, value);
 					}
 				}
-			}
-			else {
-                int cc = 0;
-                int signalLevel = -1;
-                while ( signalLevel == -1){
-                    Thread.sleep(200);
-                    if (cc++ >= 5)
-                    {
-                        break;
-                    }
-                }
-                lteData.put("test_dbm", -113 + 2 * signalLevel);
 			}
 
 			// Manual Array Parse, This data is not always accurate, this is only here for reference.
