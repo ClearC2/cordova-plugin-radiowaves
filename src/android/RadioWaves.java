@@ -116,7 +116,7 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 				if (i instanceof CellInfoCdma) cellInfoCdma = (CellInfoCdma) i;
 				else if (i instanceof CellInfoLte) {
 					Log.d("GETFUKD", "Sup brah");
-					CellInfoLte cellInfoLteTemp = (CellInfoCdma) i;
+					CellInfoLte cellInfoLteTemp = (CellInfoLte) i;
 					if (cellInfoLteTemp.getCellIdentity().getCi() == Integer.MAX_VALUE) return;
 					cellInfoLte = (CellInfoLte) i;
 				}
