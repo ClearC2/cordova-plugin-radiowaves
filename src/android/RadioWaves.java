@@ -28,10 +28,6 @@ import android.Manifest;
 import android.os.Build;
 import android.util.Log;
 
-/**
- * Created by cameronmoreau on 5/17/17.
- */
-
 public class RadioWaves extends CordovaPlugin implements SignalStrengthListener {
 
 	private static final String LOCATION_PERMISSION = Manifest.permission.ACCESS_COARSE_LOCATION;
@@ -53,13 +49,13 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 
 	public RadioWaves() {
 	}
-	
+
 	@Override
 	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
 		super.initialize(cordova, webView);
-		
+
 		this.activity = this.cordova.getActivity();
-		
+
 		// Setup signal listener
 		this.tm = (TelephonyManager) activity.getSystemService(Context.TELEPHONY_SERVICE);
 		this.phoneStateListener = new CustomPhoneStateListener(this);
@@ -91,7 +87,7 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 				this.infoCallback = callbackContext;
 				PermissionHelper.requestPermission(this, 0, LOCATION_PERMISSION);
 			}
-			
+
 			return true;
 		}
 
@@ -104,7 +100,7 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 		// If allowed, fetch cell info
 		if (grantResults[0] != PackageManager.PERMISSION_DENIED) {
 			getCellInfo();
-			
+
 			// Finish getting info
 			if (infoCallback != null) getInfo(infoCallback);
 		} else {

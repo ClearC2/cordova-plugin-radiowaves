@@ -4,10 +4,6 @@ import android.telephony.PhoneStateListener;
 import android.telephony.SignalStrength;
 import android.util.Log;
 
-/**
- * Created by cameronmoreau on 5/17/17.
- */
-
 public class CustomPhoneStateListener extends PhoneStateListener {
 
   SignalStrengthListener listener;
