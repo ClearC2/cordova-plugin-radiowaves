@@ -236,8 +236,6 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 			// LTE
 			if (cellInfoLte != null) {
 				CellSignalStrengthLte signalStrengthLte = cellInfoLte.getCellSignalStrength();
-				lteData.put("dbm", signalStrengthLte.getDbm());
-				lteData.put("asu", signalStrengthLte.getAsuLevel());
 				String[] LTEData = signalStrengthLte.toString().split(" ");
 				for (int i = 0; i < LTEData.length; i++) {
 					String[] data = LTEData[i].split("=");
@@ -248,6 +246,11 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 						lteData.put(key, value);
 					}
 				}
+				lteData.put("dbm", signalStrengthLte.getDbm());
+				lteData.put("asu", signalStrengthLte.getAsuLevel());
+				lteData.put("rsrp", signalStrengthLte.getRsrp());
+				lteData.put("rsrq", signalStrengthLte.getRsrq());
+				lteData.put("rssnr", signalStrengthLte.getRssnr());
 			}
 
 			// Manual Array Parse, This data is not always accurate, this is only here for reference.
