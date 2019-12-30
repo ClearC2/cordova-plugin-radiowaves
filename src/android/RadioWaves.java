@@ -253,19 +253,69 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 				lteData.put("rssnr", signalStrengthLte.getRssnr());
 			}
 
-			// Manual Array Parse, This data is not always accurate, this is only here for reference.
+			// Manual Array Parse, This data is not always accurate, this is only here for reference. - This is known to break on certain android versions
 			String[] SignalParse = signalStrength.toString().split(" ");
 			if (SignalParse.length >= 11) {
-				dangerous_cdmaData.put("rssi", (Integer.parseInt(SignalParse[3]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[3]));
-				dangerous_cdmaData.put("ecio", (Integer.parseInt(SignalParse[4]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[4]));
-				dangerous_evdoData.put("rssi", (Integer.parseInt(SignalParse[5]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[5]));
-				dangerous_evdoData.put("ecio", (Integer.parseInt(SignalParse[6]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[6]));
-				dangerous_evdoData.put("snr", (Integer.parseInt(SignalParse[7]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[7]));
-				dangerous_lteData.put("ss", (Integer.parseInt(SignalParse[8]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[8]));
-				dangerous_lteData.put("rsrp", (Integer.parseInt(SignalParse[9]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[9]));
-				dangerous_lteData.put("rsrq", (Integer.parseInt(SignalParse[10]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[10]));
-				dangerous_lteData.put("snr", (Integer.parseInt(SignalParse[11]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[11]));
-				dangerous_lteData.put("cqi", (Integer.parseInt(SignalParse[12]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[12]));
+			    try {
+                    dangerous_cdmaData.put("rssi", (Integer.parseInt(SignalParse[3]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[3]));
+                } catch (NumberFormatException  e) {
+                    dangerous_cdmaData.put("rssi", -1);
+                    // e.printStackTrace();
+                }
+                try {
+                    dangerous_cdmaData.put("ecio", (Integer.parseInt(SignalParse[4]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[4]));
+                } catch (NumberFormatException  e) {
+                    dangerous_cdmaData.put("ecio", -1);
+                    // e.printStackTrace();
+                }
+                try {
+                    dangerous_evdoData.put("rssi", (Integer.parseInt(SignalParse[5]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[5]));
+                } catch (NumberFormatException  e) {
+                    dangerous_evdoData.put("rssi", -1);
+                    // e.printStackTrace();
+                }
+                try {
+                    dangerous_evdoData.put("ecio", (Integer.parseInt(SignalParse[6]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[6]));
+                } catch (NumberFormatException  e) {
+                    dangerous_evdoData.put("ecio", -1);
+                    // e.printStackTrace();
+                }
+				try {
+                    dangerous_evdoData.put("snr", (Integer.parseInt(SignalParse[7]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[7]));
+                } catch (NumberFormatException  e) {
+                    dangerous_evdoData.put("snr", -1);
+                    // e.printStackTrace();
+                }
+				try {
+                    dangerous_lteData.put("ss", (Integer.parseInt(SignalParse[8]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[8]));
+                } catch (NumberFormatException  e) {
+                    dangerous_lteData.put("ss", -1);
+                    // e.printStackTrace();
+                }
+				try {
+                    dangerous_lteData.put("rsrp", (Integer.parseInt(SignalParse[9]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[9]));
+                } catch (NumberFormatException  e) {
+                    dangerous_lteData.put("rsrp", -1);
+                    // e.printStackTrace();
+                }
+				try {
+                    dangerous_lteData.put("rsrq", (Integer.parseInt(SignalParse[10]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[10]));
+                } catch (NumberFormatException  e) {
+                    dangerous_lteData.put("rsrq", -1);
+                    // e.printStackTrace();
+                }
+				try {
+                    dangerous_lteData.put("snr", (Integer.parseInt(SignalParse[11]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[11]));
+                } catch (NumberFormatException  e) {
+                    dangerous_lteData.put("snr", -1);
+                    // e.printStackTrace();
+                }
+				try {
+                    dangerous_lteData.put("cqi", (Integer.parseInt(SignalParse[12]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[12]));
+                } catch (NumberFormatException  e) {
+                    dangerous_lteData.put("cqi", -1);
+                    // e.printStackTrace();
+                }
 			}
 
 			// Signal
