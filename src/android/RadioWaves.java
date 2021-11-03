@@ -98,15 +98,22 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 	@Override
 	public void onRequestPermissionResult(int requestCode, String[] permissions, int[] grantResults) {
 		// If allowed, fetch cell info
-		if (grantResults[0] != PackageManager.PERMISSION_DENIED) {
-			getCellInfo();
 
-			// Finish getting info
-			if (infoCallback != null) getInfo(infoCallback);
-		} else {
-			// Info failed
-			if (infoCallback != null) infoCallback.error("Permission denied");
+		try {
+		    if (grantResults[0] != PackageManager.PERMISSION_DENIED) {
+                getCellInfo();
+                // Finish getting info
+                if (infoCallback != null) getInfo(infoCallback);
+            } else {
+                // Info failed
+                if (infoCallback != null) infoCallback.error("Permission denied");
+            }
 		}
+		catch (ArrayIndexOutOfBoundsException e) {
+		    getCellInfo();
+		    if (infoCallback != null) getInfo(infoCallback);
+		}
+
 	}
 
 	private void getCellInfo() {
@@ -202,7 +209,7 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
 				cellInfo.put("gsm", gsmInfo);
 			}
 
-		} catch(JSONException e) {
+		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 
@@ -260,61 +267,80 @@ public class RadioWaves extends CordovaPlugin implements SignalStrengthListener 
                     dangerous_cdmaData.put("rssi", (Integer.parseInt(SignalParse[3]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[3]));
                 } catch (NumberFormatException  e) {
                     dangerous_cdmaData.put("rssi", -1);
-                    // e.printStackTrace();
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    dangerous_cdmaData.put("rssi", -1);
                 }
+
                 try {
                     dangerous_cdmaData.put("ecio", (Integer.parseInt(SignalParse[4]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[4]));
                 } catch (NumberFormatException  e) {
                     dangerous_cdmaData.put("ecio", -1);
-                    // e.printStackTrace();
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    dangerous_cdmaData.put("ecio", -1);
                 }
+
                 try {
                     dangerous_evdoData.put("rssi", (Integer.parseInt(SignalParse[5]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[5]));
                 } catch (NumberFormatException  e) {
                     dangerous_evdoData.put("rssi", -1);
-                    // e.printStackTrace();
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    dangerous_cdmaData.put("rssi", -1);
                 }
+
                 try {
                     dangerous_evdoData.put("ecio", (Integer.parseInt(SignalParse[6]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[6]));
                 } catch (NumberFormatException  e) {
                     dangerous_evdoData.put("ecio", -1);
-                    // e.printStackTrace();
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    dangerous_cdmaData.put("ecio", -1);
                 }
+
 				try {
                     dangerous_evdoData.put("snr", (Integer.parseInt(SignalParse[7]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[7]));
                 } catch (NumberFormatException  e) {
                     dangerous_evdoData.put("snr", -1);
-                    // e.printStackTrace();
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    dangerous_cdmaData.put("snr", -1);
                 }
+
 				try {
                     dangerous_lteData.put("ss", (Integer.parseInt(SignalParse[8]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[8]));
                 } catch (NumberFormatException  e) {
                     dangerous_lteData.put("ss", -1);
-                    // e.printStackTrace();
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    dangerous_cdmaData.put("ss", -1);
                 }
+
 				try {
                     dangerous_lteData.put("rsrp", (Integer.parseInt(SignalParse[9]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[9]));
                 } catch (NumberFormatException  e) {
                     dangerous_lteData.put("rsrp", -1);
-                    // e.printStackTrace();
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    dangerous_cdmaData.put("rsrp", -1);
                 }
+
 				try {
                     dangerous_lteData.put("rsrq", (Integer.parseInt(SignalParse[10]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[10]));
                 } catch (NumberFormatException  e) {
                     dangerous_lteData.put("rsrq", -1);
-                    // e.printStackTrace();
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    dangerous_cdmaData.put("rsrq", -1);
                 }
+
 				try {
                     dangerous_lteData.put("snr", (Integer.parseInt(SignalParse[11]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[11]));
                 } catch (NumberFormatException  e) {
                     dangerous_lteData.put("snr", -1);
-                    // e.printStackTrace();
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    dangerous_cdmaData.put("snr", -1);
                 }
+
 				try {
                     dangerous_lteData.put("cqi", (Integer.parseInt(SignalParse[12]) == Integer.MAX_VALUE) ? -1 : Integer.parseInt(SignalParse[12]));
                 } catch (NumberFormatException  e) {
                     dangerous_lteData.put("cqi", -1);
-                    // e.printStackTrace();
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    dangerous_cdmaData.put("cqi", -1);
                 }
 			}
 
